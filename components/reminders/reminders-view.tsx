@@ -13,10 +13,14 @@ import { useReminders } from "@/hooks/use-reminders";
 import { formatDistanceToNow, format } from "date-fns";
 import { useState } from "react";
 import { AddReminderModal } from "./add-reminder-modal";
+import { Job } from "@/lib/supabase";
+
+interface Remainder {
+  job: Job;
+}
 
 export function RemindersView() {
   const { reminders, isLoading, toggleReminder, addReminder } = useReminders();
-
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   const handleAddReminder = async (reminderData: any) => {

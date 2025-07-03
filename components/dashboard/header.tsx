@@ -1,18 +1,19 @@
-"use client"
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { useAuth } from "@/components/auth-provider"
-import { LogOut, Menu } from "lucide-react"
-import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/auth-provider";
+import { LogOut, Menu } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { DashboardSidebar } from "./sidebar";
 
 export function DashboardHeader() {
-  const { user, signOut } = useAuth()
-  const router = useRouter()
+  const { user, signOut } = useAuth();
+  const router = useRouter();
 
   const handleSignOut = () => {
-    signOut()
-    router.push("/")
-  }
+    signOut();
+    router.push("/");
+  };
 
   return (
     <div className="sticky top-0 z-40 flex h-16 shrink-0 items-center gap-x-4 border-b bg-background px-4 shadow-sm sm:gap-x-6 sm:px-6 lg:px-8 lg:hidden">
@@ -34,5 +35,5 @@ export function DashboardHeader() {
         </div>
       </div>
     </div>
-  )
+  );
 }

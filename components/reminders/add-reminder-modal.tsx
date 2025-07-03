@@ -18,6 +18,7 @@ import {
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogOverlay,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useJobs } from "@/hooks/use-jobs";
@@ -63,7 +64,7 @@ export function AddReminderModal({
     job_id: preselectedJobId || "",
     due_date: "",
     due_time: "09:00",
-    type: "Follow-up" as const,
+    type: "Follow-up" as string,
   });
 
   // Get current date and time for defaults
@@ -160,7 +161,10 @@ export function AddReminderModal({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent
+        className="sm:max-w-[500px]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <DialogHeader>
           <DialogTitle className="flex items-center">
             <Clock className="mr-2 h-5 w-5" />
