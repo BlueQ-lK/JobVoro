@@ -40,7 +40,7 @@ export interface Note {
   job_id?: string
   title: string
   content: string
-  tags: string[]
+  pin: boolean
   created_at: string
   updated_at: string
 }

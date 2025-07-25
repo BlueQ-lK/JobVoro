@@ -18,16 +18,26 @@ import {
   FileText,
   Calendar,
   Briefcase,
-  Menu,
-  Eclipse,
   EllipsisVertical,
+  Trash2,
+  PinOff,
+  Pin,
 } from "lucide-react";
 import { useNotes } from "@/hooks/use-notes";
 import { formatDistanceToNow } from "date-fns";
 import { AddNoteModal } from "./add-note-modal";
+import {
+  DropdownMenu,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
+import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
 
 export function NotesView() {
-  const { notes, isLoading, addNote, updateNote, refetch } = useNotes();
+  const { notes, isLoading, addNote, updateNote, refetch, deleteNote } =
+    useNotes();
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [note, setNote] = useState({
@@ -37,11 +47,13 @@ export function NotesView() {
     id: "",
   });
 
-  const filteredNotes = notes.filter(
-    (note) =>
-      note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const filteredNotes = notes
+    .filter(
+      (note) =>
+        note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        note.content.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => Number(b.pin) - Number(a.pin));
 
   if (isLoading) {
     return (
@@ -60,6 +72,14 @@ export function NotesView() {
       </div>
     );
   }
+
+  const handleDeleteNote = async (noteId: string) => {
+    try {
+      await deleteNote(noteId);
+    } catch (error) {
+      console.log("Note delete error");
+    }
+  };
 
   const handleAddNote = async (noteData: any) => {
     try {
@@ -98,6 +118,14 @@ export function NotesView() {
       }
     });
     setIsAddModalOpen(true);
+  };
+
+  const handlePinned = async (noteId: string, pinStatus: boolean) => {
+    try {
+      await updateNote(noteId, { pin: !pinStatus });
+    } catch (error) {
+      console.log("pinned update error");
+    }
   };
 
   return (
@@ -163,13 +191,47 @@ export function NotesView() {
                       </CardDescription>
                     )}
                   </div>
-                  <EllipsisVertical
-                    className="h-5 w-5 bg-black"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      console.log("hello");
-                    }}
-                  />
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <button
+                        onClick={(e) => e.stopPropagation()}
+                        className="p-1 hover:bg-accent rounded"
+                      >
+                        <EllipsisVertical className="h-5 w-5 text-muted-foreground" />
+                      </button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="w-32 bg-white">
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handlePinned(note.id, note.pin);
+                        }}
+                      >
+                        {note.pin ? (
+                          <>
+                            <PinOff className="w-4 h-4 mr-2" />
+                            Unpin
+                          </>
+                        ) : (
+                          <>
+                            <Pin className="w-4 h-4 mr-2" />
+                            Pin
+                          </>
+                        )}
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleDeleteNote(note.id);
+                        }}
+                        className="text-red-600 focus:text-red-600"
+                      >
+                        <Trash2 className="w-4 h-4 mr-2" />
+                        Delete
+                      </DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
