@@ -53,18 +53,3 @@ export interface Profile {
   created_at: string
   updated_at: string
 }
-
-export type TimelineEvent = {
-  id: string
-  job_id: string
-  status: "Applied" | "Interview" | "Offer" | "Rejected" | "Waiting"
-  notes?: string
-  created_at: string
-  updated_at: string
-}
-
-export type JobWithTimeline = Job & {
-  timeline: TimelineEvent[]
-  current_status: string
-  applied_date: string
-}
