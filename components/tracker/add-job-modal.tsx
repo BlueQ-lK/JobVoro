@@ -42,6 +42,8 @@ export function AddJobModal({
     notes: "",
     job_url: "",
     applied_date: new Date().toISOString().split("T")[0],
+    title: "",
+    content: "",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -60,6 +62,8 @@ export function AddJobModal({
         notes: "",
         job_url: "",
         applied_date: new Date().toISOString().split("T")[0],
+        title: "",
+        content: "",
       });
     } catch (error) {
       // Error handled by parent
@@ -173,11 +177,18 @@ export function AddJobModal({
           </div>
           <div className="space-y-2">
             <Label htmlFor="notes">Notes</Label>
+            <Input
+              value={formData.title}
+              onChange={(e) =>
+                setFormData({ ...formData, title: e.target.value })
+              }
+              placeholder="Enter title"
+            />
             <Textarea
               id="notes"
-              value={formData.notes}
+              value={formData.content}
               onChange={(e) =>
-                setFormData({ ...formData, notes: e.target.value })
+                setFormData({ ...formData, content: e.target.value })
               }
               placeholder="Any additional notes about this application..."
               className="border-zinc-400/50 resize-none"

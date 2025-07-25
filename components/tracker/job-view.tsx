@@ -41,6 +41,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Input } from "../ui/input";
+import { useNotes } from "@/hooks/use-notes";
 
 interface JobViewProps {
   open: boolean;
@@ -73,8 +74,11 @@ export function JobViewAll({
   const [status, setStatus] = useState("upcoming");
   const { jobs, updateJob, deleteJob } = useJobs();
   const [isEdit, setIsEdit] = useState(false);
+  const { notes } = useNotes();
 
   const currentJob = jobs.find((j) => j.id === jobId);
+  const currentNote = notes.filter((j) => j.job_id === jobId);
+
   const [editData, setEditData] = useState({
     position: currentJob?.position || "",
     company: currentJob?.company || "",
@@ -379,18 +383,13 @@ export function JobViewAll({
               <div className="bg-gray-50 rounded-xl border border-gray-200 p-5">
                 <h2 className="text-lg font-semibold  mb-3">Notes</h2>
                 <div className="space-y-3">
-                  <div className="p-4 bg-white rounded-lg border border-gray-100">
-                    <p className=" leading-relaxed text-sm">
-                      Talked to HR on June 29th — expecting tech round this
-                      week. The team seems very collaborative and the role has
-                      good growth potential.
-                    </p>
-                    <p className="text-xs  mt-2">Added 2 days ago</p>
-                  </div>
-
-                  <button className="w-full p-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-gray-400 hover:text-gray-600 transition-colors text-sm">
-                    + Add Note
-                  </button>
+                  {currentNote.map((item) => (
+                    <div className="px-4 py-2 bg-white rounded-lg border border-gray-100">
+                      <p className=" leading-relaxed text-sm">{}</p>
+                      <h3 className="font-bold mb-1">{item.title}</h3>
+                      <p className="text-xs">{item.content}</p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

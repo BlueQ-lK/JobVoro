@@ -39,14 +39,39 @@ export function useJobs() {
     if (!user) return
 
     try {
-      console.log(jobData)
+      const jobDataFilter = {
+        company: jobData.company,
+        position: jobData.position,
+        location: jobData.location,
+        salary: jobData.salary,
+        status: jobData.status,
+        job_url: jobData.job_url,
+        applied_date: jobData.applied_date,
+      }
+
+      const noteDataFilter = {
+        title: jobData.title,
+        content: jobData.content
+      }
+
       const { data, error } = await supabase
         .from("jobs")
-        .insert([{ ...jobData, user_id: user.id }])
+        .insert([{ ...jobDataFilter, user_id: user.id }])
         .select()
         .single()
 
       if (error) throw error
+
+      const {error: noteError} = await supabase
+      .from("notes")
+      .insert({
+        title: noteDataFilter.title,
+        content: noteDataFilter.content,
+        job_id: data.id,
+        user_id: data.user_id
+      })
+
+      if(noteError) throw error
 
       setJobs((prev) => [data, ...prev])
       toast({

@@ -16,7 +16,8 @@ export interface Job {
   salary?: string
   location?: string
   job_url?: string
-  notes?: string
+  title?: string
+  content?: string,
   created_at: string
   updated_at: string
 }
