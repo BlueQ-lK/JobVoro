@@ -1,6 +1,5 @@
 "use client";
 
-import type { Job } from "@/lib/supabase";
 import {
   Sheet,
   SheetClose,

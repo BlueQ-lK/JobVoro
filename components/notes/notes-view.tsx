@@ -1,26 +1,47 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { Plus, Search, FileText, Calendar, Briefcase } from "lucide-react"
-import { useNotes } from "@/hooks/use-notes"
-import { formatDistanceToNow } from "date-fns"
-import { AddNoteModal } from "./add-note-modal"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Plus,
+  Search,
+  FileText,
+  Calendar,
+  Briefcase,
+  Menu,
+  Eclipse,
+  EllipsisVertical,
+} from "lucide-react";
+import { useNotes } from "@/hooks/use-notes";
+import { formatDistanceToNow } from "date-fns";
+import { AddNoteModal } from "./add-note-modal";
 
 export function NotesView() {
-  const { notes, isLoading } = useNotes()
-  const [searchTerm, setSearchTerm] = useState("")
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
+  const { notes, isLoading, addNote, updateNote, refetch } = useNotes();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [note, setNote] = useState({
+    title: "",
+    content: "",
+    job_id: "",
+    id: "",
+  });
 
   const filteredNotes = notes.filter(
     (note) =>
       note.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.content.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      note.tags.some((tag) => tag.toLowerCase().includes(searchTerm.toLowerCase())),
-  )
+      note.content.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   if (isLoading) {
     return (
@@ -37,12 +58,37 @@ export function NotesView() {
           ))}
         </div>
       </div>
-    )
+    );
   }
 
-  function handleAddNote(noteData: any): Promise<void> {
-    throw new Error("Function not implemented.")
-  }
+  const handleAddNote = async (noteData: any) => {
+    try {
+      if (note.id) {
+        await updateNote(note.id, noteData);
+      } else {
+        await addNote(noteData);
+      }
+      await refetch();
+      setIsAddModalOpen(false);
+      setNote({ title: "", content: "", job_id: "", id: "" });
+    } catch (error) {
+      console.log("error saving note {notes-view.tsx L:66}");
+    }
+  };
+
+  const handleOpenNote = (openNoteId: any) => {
+    filteredNotes.map((item) => {
+      if (item.id == openNoteId) {
+        setNote({
+          title: item.title || "",
+          content: item.content || "",
+          job_id: item.job_id || "",
+          id: item.id || "",
+        });
+      }
+    });
+    setIsAddModalOpen(true);
+  };
 
   return (
     <div className="space-y-6">
@@ -55,7 +101,7 @@ export function NotesView() {
               : `${notes.length} note${notes.length === 1 ? "" : "s"} saved`}
           </p>
         </div>
-        <Button>
+        <Button onClick={() => setIsAddModalOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           New Note
         </Button>
@@ -80,7 +126,8 @@ export function NotesView() {
           </div>
           <h3 className="text-lg font-semibold mb-2">No notes yet</h3>
           <p className="text-muted-foreground mb-4">
-            Start taking notes about companies, interviews, and your job search strategy.
+            Start taking notes about companies, interviews, and your job search
+            strategy.
           </p>
           <Button onClick={() => setIsAddModalOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
@@ -90,46 +137,59 @@ export function NotesView() {
       ) : (
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {filteredNotes.map((note) => (
-            <Card key={note.id} className="hover:shadow-lg transition-shadow cursor-pointer">
+            <Card
+              key={note.id}
+              className="hover:shadow-lg transition-shadow cursor-pointer"
+              onClick={() => handleOpenNote(note.id)}
+            >
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div className="flex-1">
                     <CardTitle className="text-lg">{note.title}</CardTitle>
                     {note.jobs && (
-                      <CardDescription className="mt-1 flex items-center">
+                      <CardDescription className="mt-1 flex items-baseline">
                         <Briefcase className="mr-1 h-3 w-3" />
-                        {note.jobs.company} - {note.jobs.position}
+                        {note.jobs.company}
                       </CardDescription>
                     )}
                   </div>
-                  <FileText className="h-5 w-5 text-muted-foreground" />
+                  <EllipsisVertical
+                    className="h-5 w-5 text-muted-foreground"
+                    onClick={() => {
+                      console.log("hello");
+                    }}
+                  />
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-sm text-muted-foreground line-clamp-3">{note.content}</p>
-                {note.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1">
-                    {note.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-xs">
-                        {tag}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
+                <p className="text-sm text-muted-foreground line-clamp-3">
+                  {note.content}
+                </p>
+              </CardContent>
+              <CardFooter className="">
                 <div className="flex items-center text-xs text-muted-foreground">
                   <Calendar className="mr-1 h-3 w-3" />
-                  {formatDistanceToNow(new Date(note.created_at), { addSuffix: true })}
+                  {formatDistanceToNow(new Date(note.created_at), {
+                    addSuffix: true,
+                  })}
                 </div>
-              </CardContent>
+              </CardFooter>
             </Card>
           ))}
         </div>
       )}
-      <AddNoteModal 
+      <AddNoteModal
+        key={note.id || "new"}
         open={isAddModalOpen}
-        onOpenChange={setIsAddModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            setNote({ title: "", content: "", job_id: "", id: "" });
+          }
+          setIsAddModalOpen(open);
+        }}
         onSubmit={handleAddNote}
+        initialNoteData={note}
       />
     </div>
-  )
+  );
 }

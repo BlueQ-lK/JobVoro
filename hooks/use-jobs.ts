@@ -39,6 +39,7 @@ export function useJobs() {
     if (!user) return
 
     try {
+      console.log(jobData)
       const { data, error } = await supabase
         .from("jobs")
         .insert([{ ...jobData, user_id: user.id }])

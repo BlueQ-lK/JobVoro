@@ -62,7 +62,7 @@ export function JobCard({ job }: JobCardProps) {
       const res = await updateJob(job.id, { status: newStatus });
       setUpdateStatus(res.status);
     } catch (error) {
-      // Error handled in hook
+      console.log("update job status error {job-card.tsx L:65}");
     }
   };
 
@@ -71,7 +71,7 @@ export function JobCard({ job }: JobCardProps) {
       await addReminder(reminderData);
       setIsReminderModalOpen(false);
     } catch (error) {
-      // Error handled in hook
+      console.log("Add job error {job-card.tsx L:74}");
     }
   };
 
