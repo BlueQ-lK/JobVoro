@@ -50,7 +50,7 @@ export function useJobs() {
       }
 
       const noteDataFilter = {
-        title: jobData.title,
+        title: jobData.title || "New note",
         content: jobData.content
       }
 
@@ -62,16 +62,19 @@ export function useJobs() {
 
       if (error) throw error
 
-      const {error: noteError} = await supabase
-      .from("notes")
-      .insert({
-        title: noteDataFilter.title,
-        content: noteDataFilter.content,
-        job_id: data.id,
-        user_id: data.user_id
-      })
+      if(noteDataFilter.title || noteDataFilter.content) {
+        const {error: noteError} = await supabase
+        .from("notes")
+        .insert({
+          title: noteDataFilter.title,
+          content: noteDataFilter.content,
+          job_id: data.id,
+          user_id: data.user_id
+        })
+        if(noteError) throw error
+      }
 
-      if(noteError) throw error
+
 
       setJobs((prev) => [data, ...prev])
       toast({

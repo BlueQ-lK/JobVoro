@@ -3,23 +3,52 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { JobCard } from "./job-card";
-import { AddJobModal } from "./add-job-modal";
-import { Plus, Search, Filter } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Calendar,
+  MapPin,
+  IndianRupee,
+  ExternalLink,
+  Bell,
+  Trash2,
+  Plus,
+  Search,
+  Filter,
+} from "lucide-react";
 import { useJobs } from "@/hooks/use-jobs";
-import { Briefcase } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { useReminders } from "@/hooks/use-reminders";
+import { formatDistanceToNow } from "date-fns";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Job } from "@/lib/supabase";
+import { AddJobModal } from "./add-job-modal";
+import { AddReminderModal } from "../reminders/add-reminder-modal";
+import { Briefcase } from "lucide-react";
 import { JobViewAll } from "./job-view";
 
+const statusOptions = [
+  "Applied",
+  "Interview",
+  "Offer",
+  "Rejected",
+  "Waiting",
+] as const;
+
 export function JobTracker() {
-  const { jobs, isLoading, addJob, refetch } = useJobs();
+  const { jobs, isLoading, addJob, deleteJob, updateJob, refetch } = useJobs();
+  const { addReminder } = useReminders();
   const [searchTerm, setSearchTerm] = useState("");
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [filterValue, setFilterValue] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState<string[]>([]);
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [isSheetOpen, setIsSheetOpen] = useState(false);
+  const [reminderJobId, setReminderJobId] = useState<string | null>(null);
   const [mouseDownPos, setMouseDownPos] = useState<{
     x: number;
     y: number;
@@ -35,45 +64,20 @@ export function JobTracker() {
   });
 
   const handleAddJob = async (jobData: any) => {
-    try {
-      await addJob(jobData);
-      setIsAddModalOpen(false);
-    } catch (error) {
-      // Error is handled in the hook
-    }
+    await addJob(jobData);
+    setIsAddModalOpen(false);
+  };
+
+  const handleUpdateJob = async () => {
+    await refetch();
   };
 
   const toggleStatus = (status: string) => {
-    refetch();
     setSelectedStatus((prev) =>
       prev.includes(status)
         ? prev.filter((s) => s !== status)
         : [...prev, status]
     );
-  };
-
-  if (isLoading) {
-    return (
-      <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Job Tracker</h1>
-            <p className="text-muted-foreground">
-              Loading your job applications...
-            </p>
-          </div>
-        </div>
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="h-64 bg-muted animate-pulse rounded-lg" />
-          ))}
-        </div>
-      </div>
-    );
-  }
-
-  const handleUpdateJob = async (a: any) => {
-    refetch();
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -82,16 +86,44 @@ export function JobTracker() {
 
   const handleClick = (e: React.MouseEvent, job: Job) => {
     const tag = (e.target as HTMLElement).tagName.toLowerCase();
-    if (["button", "input"].includes(tag)) return;
+    if (["button", "input", "svg", "path"].includes(tag)) return;
 
     if (mouseDownPos) {
       const dx = Math.abs(e.clientX - mouseDownPos.x);
       const dy = Math.abs(e.clientY - mouseDownPos.y);
       if (dx > 5 || dy > 5) return;
     }
+
     setSelectedJob(job);
     setIsSheetOpen(true);
   };
+
+  const handleReminderSubmit = async (data: any) => {
+    if (!reminderJobId) return;
+    await addReminder({ ...data, job_id: reminderJobId });
+    setReminderJobId(null);
+  };
+
+  const handleDeleteJob = async (jobId: string) => {
+    await deleteJob(jobId);
+    await refetch();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <h1 className="text-3xl font-bold">Job Tracker</h1>
+        <p className="text-muted-foreground">
+          Loading your job applications...
+        </p>
+        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {[...Array(6)].map((_, i) => (
+            <div key={i} className="h-64 bg-muted animate-pulse rounded-lg" />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -133,29 +165,28 @@ export function JobTracker() {
           <Button onClick={refetch}>Refresh</Button>
         </div>
       )}
+
       {filterValue && (
         <Card>
           <CardHeader className="pb-1">
             <CardTitle className="text-xl">Status</CardTitle>
           </CardHeader>
-          <CardContent className="space-x-4">
-            {["Applied", "Interview", "Offer", "Rejected", "Waiting"].map(
-              (status) => (
-                <Button
-                  key={status}
-                  variant={
-                    selectedStatus.includes(status) ? "default" : "outline"
-                  }
-                  onClick={() => toggleStatus(status)}
-                  className=""
-                >
-                  {status}
-                </Button>
-              )
-            )}
+          <CardContent className="space-x-2">
+            {statusOptions.map((status) => (
+              <Button
+                key={status}
+                variant={
+                  selectedStatus.includes(status) ? "default" : "outline"
+                }
+                onClick={() => toggleStatus(status)}
+              >
+                {status}
+              </Button>
+            ))}
           </CardContent>
         </Card>
       )}
+
       {jobs.length === 0 ? (
         <div className="text-center py-12">
           <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
@@ -165,8 +196,7 @@ export function JobTracker() {
             No job applications yet
           </h3>
           <p className="text-muted-foreground mb-4">
-            Start tracking your job applications to stay organized and never
-            miss a follow-up.
+            Start tracking your job applications to stay organized.
           </p>
           <Button onClick={() => setIsAddModalOpen(true)}>
             <Plus className="mr-2 h-4 w-4" />
@@ -182,7 +212,92 @@ export function JobTracker() {
               onMouseDown={handleMouseDown}
               onClick={(e) => handleClick(e, job)}
             >
-              <JobCard job={job} />
+              <Card className="hover:shadow-xl transition-shadow shadow-md h-full relative">
+                <CardHeader>
+                  <div className="flex justify-between items-baseline">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg inline-flex gap-2">
+                        {job.company}
+                        {job.job_url && (
+                          <a
+                            href={job.job_url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-muted-foreground hover:text-primary"
+                          >
+                            <ExternalLink className="h-4 w-4" />
+                          </a>
+                        )}
+                      </CardTitle>
+                      <p className="text-sm text-muted-foreground">
+                        {job.position}
+                      </p>
+                    </div>
+                  </div>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <Calendar className="mr-2 h-4 w-4" />
+                    Applied{" "}
+                    {formatDistanceToNow(new Date(job.applied_date), {
+                      addSuffix: true,
+                    })}
+                  </div>
+                  {job.location && (
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <MapPin className="mr-2 h-4 w-4" />
+                      {job.location}
+                    </div>
+                  )}
+                  {job.salary && (
+                    <div className="flex items-center text-sm text-muted-foreground">
+                      <IndianRupee className="mr-2 h-4 w-4" />
+                      {job.salary}
+                    </div>
+                  )}
+                  <div className="flex space-x-2 pt-2">
+                    <Select
+                      value={job.status}
+                      onValueChange={(value) =>
+                        updateJob(job.id, {
+                          status: value as Job["status"],
+                        }).then(() => refetch())
+                      }
+                    >
+                      <SelectTrigger onClick={(e) => e.stopPropagation()}>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {statusOptions.map((status) => (
+                          <SelectItem key={status} value={status}>
+                            {status}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setReminderJobId(job.id);
+                      }}
+                    >
+                      <Bell className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteJob(job.id);
+                      }}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           ))}
         </div>
@@ -201,6 +316,12 @@ export function JobTracker() {
           jobId={selectedJob.id}
         />
       )}
+      <AddReminderModal
+        open={Boolean(reminderJobId)}
+        onOpenChange={() => setReminderJobId(null)}
+        onSubmit={handleReminderSubmit}
+        preselectedJobId={reminderJobId ?? ""}
+      />
     </div>
   );
 }

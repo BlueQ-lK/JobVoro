@@ -1,10 +1,10 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CheckCircle, Clock, Calendar, Award } from "lucide-react"
-import { useJobs } from "@/hooks/use-jobs"
-import { format, formatDistanceToNow } from "date-fns"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { CheckCircle, Clock, Calendar, Award } from "lucide-react";
+import { useJobs } from "@/hooks/use-jobs";
+import { format, formatDistanceToNow } from "date-fns";
 
 const statusColors = {
   Applied: "bg-blue-100 text-blue-800",
@@ -12,7 +12,7 @@ const statusColors = {
   Offer: "bg-green-100 text-green-800",
   Rejected: "bg-red-100 text-red-800",
   Waiting: "bg-gray-100 text-gray-800",
-}
+};
 
 const statusIcons = {
   Applied: Clock,
@@ -20,17 +20,19 @@ const statusIcons = {
   Offer: Award,
   Rejected: Clock,
   Waiting: Clock,
-}
+};
 
 export function TimelineView() {
-  const { jobs, isLoading } = useJobs()
+  const { jobs, isLoading } = useJobs();
 
   if (isLoading) {
     return (
       <div className="space-y-6">
         <div>
           <h1 className="text-3xl font-bold">Timeline</h1>
-          <p className="text-muted-foreground">Loading your application timeline...</p>
+          <p className="text-muted-foreground">
+            Loading your application timeline...
+          </p>
         </div>
         <div className="space-y-8">
           {[...Array(3)].map((_, i) => (
@@ -38,11 +40,14 @@ export function TimelineView() {
           ))}
         </div>
       </div>
-    )
+    );
   }
 
   // Sort jobs by application date (most recent first)
-  const sortedJobs = [...jobs].sort((a, b) => new Date(b.applied_date).getTime() - new Date(a.applied_date).getTime())
+  const sortedJobs = [...jobs].sort(
+    (a, b) =>
+      new Date(b.applied_date).getTime() - new Date(a.applied_date).getTime()
+  );
 
   return (
     <div className="space-y-6">
@@ -51,7 +56,9 @@ export function TimelineView() {
         <p className="text-muted-foreground">
           {jobs.length === 0
             ? "Visualize your job application progress"
-            : `Tracking progress for ${jobs.length} application${jobs.length === 1 ? "" : "s"}`}
+            : `Tracking progress for ${jobs.length} application${
+                jobs.length === 1 ? "" : "s"
+              }`}
         </p>
       </div>
 
@@ -60,15 +67,19 @@ export function TimelineView() {
           <div className="mx-auto w-24 h-24 bg-muted rounded-full flex items-center justify-center mb-4">
             <Calendar className="h-12 w-12 text-muted-foreground" />
           </div>
-          <h3 className="text-lg font-semibold mb-2">No applications to show</h3>
-          <p className="text-muted-foreground mb-4">Start adding job applications to see your progress timeline.</p>
+          <h3 className="text-lg font-semibold mb-2">
+            No applications to show
+          </h3>
+          <p className="text-muted-foreground mb-4">
+            Start adding job applications to see your progress timeline.
+          </p>
         </div>
       ) : (
         <div className="space-y-8">
           {sortedJobs.map((job) => {
-            const StatusIcon = statusIcons[job.status]
-            const isCompleted = job.status === "Offer"
-            const isRejected = job.status === "Rejected"
+            const StatusIcon = statusIcons[job.status];
+            const isCompleted = job.status === "Offer";
+            const isRejected = job.status === "Rejected";
 
             return (
               <Card key={job.id}>
@@ -76,9 +87,17 @@ export function TimelineView() {
                   <CardTitle className="flex items-center justify-between">
                     <div>
                       <h3 className="text-xl">{job.company}</h3>
-                      <p className="text-sm text-muted-foreground">{job.position}</p>
+                      <p className="text-sm text-muted-foreground">
+                        {job.position}
+                      </p>
                     </div>
-                    <Badge className={statusColors[job.status] || "bg-gray-100 text-gray-800"}>{job.status}</Badge>
+                    <Badge
+                      className={
+                        statusColors[job.status] || "bg-gray-100 text-gray-800"
+                      }
+                    >
+                      {job.status}
+                    </Badge>
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -95,11 +114,20 @@ export function TimelineView() {
                             <div>
                               <p className="font-medium">Applied</p>
                               <p className="text-sm text-muted-foreground">
-                                {format(new Date(job.applied_date), "MMM d, yyyy")} •{" "}
-                                {formatDistanceToNow(new Date(job.applied_date), { addSuffix: true })}
+                                {format(
+                                  new Date(job.applied_date),
+                                  "MMM d, yyyy"
+                                )}{" "}
+                                •{" "}
+                                {formatDistanceToNow(
+                                  new Date(job.applied_date),
+                                  { addSuffix: true }
+                                )}
                               </p>
                             </div>
-                            <Badge className="bg-blue-100 text-blue-800">Applied</Badge>
+                            <Badge className="bg-blue-100 text-blue-800">
+                              Applied
+                            </Badge>
                           </div>
                         </div>
                       </div>
@@ -112,8 +140,8 @@ export function TimelineView() {
                               isCompleted
                                 ? "bg-green-500 border-green-500"
                                 : isRejected
-                                  ? "bg-red-500 border-red-500"
-                                  : "bg-primary border-primary"
+                                ? "bg-red-500 border-red-500"
+                                : "bg-primary border-primary"
                             }`}
                           >
                             {isCompleted ? (
@@ -129,11 +157,23 @@ export function TimelineView() {
                               <div>
                                 <p className="font-medium">{job.status}</p>
                                 <p className="text-sm text-muted-foreground">
-                                  {format(new Date(job.updated_at), "MMM d, yyyy")} •{" "}
-                                  {formatDistanceToNow(new Date(job.updated_at), { addSuffix: true })}
+                                  {format(
+                                    new Date(job.updated_at),
+                                    "MMM d, yyyy"
+                                  )}{" "}
+                                  •{" "}
+                                  {formatDistanceToNow(
+                                    new Date(job.updated_at),
+                                    { addSuffix: true }
+                                  )}
                                 </p>
                               </div>
-                              <Badge className={statusColors[job.status] || "bg-gray-100 text-gray-800"}>
+                              <Badge
+                                className={
+                                  statusColors[job.status] ||
+                                  "bg-gray-100 text-gray-800"
+                                }
+                              >
                                 {job.status}
                               </Badge>
                             </div>
@@ -153,10 +193,10 @@ export function TimelineView() {
                   </div>
                 </CardContent>
               </Card>
-            )
+            );
           })}
         </div>
       )}
     </div>
-  )
+  );
 }

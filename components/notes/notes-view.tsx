@@ -177,7 +177,7 @@ export function NotesView() {
           {filteredNotes.map((note) => (
             <Card
               key={note.id}
-              className="hover:shadow-lg transition-shadow cursor-pointer"
+              className="hover:shadow-lg transition-shadow cursor-pointer relative"
               onClick={() => handleEditNote(note.id)}
             >
               <CardHeader>
@@ -240,7 +240,7 @@ export function NotesView() {
                 </p>
               </CardContent>
               <CardFooter className="">
-                <div className="flex items-center text-xs text-muted-foreground">
+                <div className="flex items-center text-xs text-muted-foreground absolute bottom-3">
                   <Calendar className="mr-1 h-3 w-3" />
                   {formatDistanceToNow(new Date(note.created_at), {
                     addSuffix: true,
