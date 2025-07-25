@@ -71,9 +71,8 @@ export function AddJobModal({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[450px]">
-        <DialogHeader>
-          <DialogTitle>Add New Job Application</DialogTitle>
-        </DialogHeader>
+        <DialogHeader></DialogHeader>
+        <DialogTitle>Add New Job Application</DialogTitle>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="company">Company *</Label>

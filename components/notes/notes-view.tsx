@@ -76,7 +76,17 @@ export function NotesView() {
     }
   };
 
-  const handleOpenNote = (openNoteId: any) => {
+  const handleNewNote = () => {
+    setNote({
+      title: "",
+      content: "",
+      job_id: "",
+      id: "",
+    });
+    setIsAddModalOpen(true);
+  };
+
+  const handleEditNote = (openNoteId: string) => {
     filteredNotes.map((item) => {
       if (item.id == openNoteId) {
         setNote({
@@ -101,7 +111,7 @@ export function NotesView() {
               : `${notes.length} note${notes.length === 1 ? "" : "s"} saved`}
           </p>
         </div>
-        <Button onClick={() => setIsAddModalOpen(true)}>
+        <Button onClick={handleNewNote}>
           <Plus className="mr-2 h-4 w-4" />
           New Note
         </Button>
@@ -129,7 +139,7 @@ export function NotesView() {
             Start taking notes about companies, interviews, and your job search
             strategy.
           </p>
-          <Button onClick={() => setIsAddModalOpen(true)}>
+          <Button onClick={handleNewNote}>
             <Plus className="mr-2 h-4 w-4" />
             Create Your First Note
           </Button>
@@ -140,7 +150,7 @@ export function NotesView() {
             <Card
               key={note.id}
               className="hover:shadow-lg transition-shadow cursor-pointer"
-              onClick={() => handleOpenNote(note.id)}
+              onClick={() => handleEditNote(note.id)}
             >
               <CardHeader>
                 <div className="flex items-start justify-between">
@@ -154,8 +164,9 @@ export function NotesView() {
                     )}
                   </div>
                   <EllipsisVertical
-                    className="h-5 w-5 text-muted-foreground"
-                    onClick={() => {
+                    className="h-5 w-5 bg-black"
+                    onClick={(e) => {
+                      e.stopPropagation();
                       console.log("hello");
                     }}
                   />
@@ -181,12 +192,7 @@ export function NotesView() {
       <AddNoteModal
         key={note.id || "new"}
         open={isAddModalOpen}
-        onOpenChange={(open) => {
-          if (!open) {
-            setNote({ title: "", content: "", job_id: "", id: "" });
-          }
-          setIsAddModalOpen(open);
-        }}
+        onOpenChange={setIsAddModalOpen}
         onSubmit={handleAddNote}
         initialNoteData={note}
       />

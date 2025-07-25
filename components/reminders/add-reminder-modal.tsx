@@ -165,11 +165,11 @@ export function AddReminderModal({
         className="sm:max-w-[500px]"
         onClick={(e) => e.stopPropagation()}
       >
-        <DialogTitle className="flex items-center">
-          <Clock className="mr-2 h-5 w-5" />
-          Add New Reminder
-        </DialogTitle>
         <DialogHeader>
+          <DialogTitle className="flex items-center">
+            <Clock className="mr-2 h-5 w-5" />
+            Add New Reminder
+          </DialogTitle>
           <DialogDescription>
             Set a reminder to stay on top of your job applications and never
             miss important follow-ups.
