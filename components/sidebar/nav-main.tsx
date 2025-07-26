@@ -32,20 +32,11 @@ export function NavMain({
             <SidebarMenuButton
               asChild
               className={cn(
-                "w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground",
-                item.isActive &&
-                  "bg-primary text-white hover:bg-primary hover:text-white shadow-sm"
+                "w-full justify-start gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground"
               )}
             >
               <Link href={item.url}>
-                {item.icon && (
-                  <item.icon
-                    className={cn(
-                      "h-4 w-4 shrink-0",
-                      item.isActive && "text-white"
-                    )}
-                  />
-                )}
+                {item.icon && <item.icon className={cn("h-4 w-4 shrink-0")} />}
                 <span className="truncate">{item.title}</span>
               </Link>
             </SidebarMenuButton>

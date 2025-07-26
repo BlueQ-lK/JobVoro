@@ -38,12 +38,6 @@ export function RemindersView() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Reminders</h1>
-            <p className="text-muted-foreground">Loading your reminders...</p>
-          </div>
-        </div>
         <div className="grid gap-6 md:grid-cols-2">
           {[...Array(2)].map((_, i) => (
             <div key={i} className="h-64 bg-muted animate-pulse rounded-lg" />
@@ -57,7 +51,6 @@ export function RemindersView() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Reminders</h1>
           <p className="text-muted-foreground">
             {reminders.length === 0
               ? "Never miss a follow-up or interview again"

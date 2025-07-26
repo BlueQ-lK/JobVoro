@@ -58,12 +58,6 @@ export function NotesView() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <div className="flex items-center justify-between">
-          <div>
-            <h1 className="text-3xl font-bold">Notes</h1>
-            <p className="text-muted-foreground">Loading your notes...</p>
-          </div>
-        </div>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="h-48 bg-muted animate-pulse rounded-lg" />
@@ -131,31 +125,22 @@ export function NotesView() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Notes</h1>
-          <p className="text-muted-foreground">
-            {notes.length === 0
-              ? "Keep track of important information and insights"
-              : `${notes.length} note${notes.length === 1 ? "" : "s"} saved`}
-          </p>
-        </div>
+        {notes.length > 0 && (
+          <div className="relative w-full max-w-sm">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              placeholder="Search notes..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="pl-10"
+            />
+          </div>
+        )}
         <Button onClick={handleNewNote}>
           <Plus className="mr-2 h-4 w-4" />
           New Note
         </Button>
       </div>
-
-      {notes.length > 0 && (
-        <div className="relative max-w-sm">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-          <Input
-            placeholder="Search notes..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="pl-10"
-          />
-        </div>
-      )}
 
       {notes.length === 0 ? (
         <div className="text-center py-12">

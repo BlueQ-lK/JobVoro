@@ -112,10 +112,6 @@ export function JobTracker() {
   if (isLoading) {
     return (
       <div className="space-y-6">
-        <h1 className="text-3xl font-bold">Job Tracker</h1>
-        <p className="text-muted-foreground">
-          Loading your job applications...
-        </p>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {[...Array(6)].map((_, i) => (
             <div key={i} className="h-64 bg-muted animate-pulse rounded-lg" />
@@ -128,43 +124,32 @@ export function JobTracker() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold">Job Tracker</h1>
-          <p className="text-muted-foreground">
-            {jobs.length === 0
-              ? "Start tracking your job applications"
-              : `Managing ${jobs.length} job application${
-                  jobs.length === 1 ? "" : "s"
-                }`}
-          </p>
-        </div>
+        {jobs.length > 0 && (
+          <div className="flex items-center space-x-4 flex-1">
+            <div className="relative w-full max-w-sm">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+              <Input
+                placeholder="Search companies or positions..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10 w-full"
+              />
+            </div>
+            <Button
+              variant="outline"
+              onClick={() => setFilterValue(!filterValue)}
+            >
+              <Filter className="mr-2 h-4 w-4" />
+              Filter
+            </Button>
+            <Button onClick={refetch}>Refresh</Button>
+          </div>
+        )}
         <Button onClick={() => setIsAddModalOpen(true)}>
           <Plus className="mr-2 h-4 w-4" />
           Add New Job
         </Button>
       </div>
-
-      {jobs.length > 0 && (
-        <div className="flex items-center space-x-4">
-          <div className="relative flex-1 max-w-sm">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
-            <Input
-              placeholder="Search companies or positions..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
-          </div>
-          <Button
-            variant="outline"
-            onClick={() => setFilterValue(!filterValue)}
-          >
-            <Filter className="mr-2 h-4 w-4" />
-            Filter
-          </Button>
-          <Button onClick={refetch}>Refresh</Button>
-        </div>
-      )}
 
       {filterValue && (
         <Card>
