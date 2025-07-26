@@ -74,11 +74,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: StickyNote,
       },
       {
-        title: "Timeline",
-        url: "/timeline",
-        icon: Calendar,
-      },
-      {
         title: "Settings",
         url: "/settings",
         icon: Settings,

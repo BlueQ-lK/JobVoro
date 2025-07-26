@@ -50,7 +50,7 @@ export function useJobs() {
       }
 
       const noteDataFilter = {
-        title: jobData.title || "New note",
+        title: jobData.title,
         content: jobData.content
       }
 
@@ -63,6 +63,9 @@ export function useJobs() {
       if (error) throw error
 
       if(noteDataFilter.title || noteDataFilter.content) {
+        if(noteDataFilter.title) {
+          noteDataFilter.title = "New Note"
+        }
         const {error: noteError} = await supabase
         .from("notes")
         .insert({
