@@ -24,6 +24,17 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 221.2 83.2% 53.3%;
     --radius: 0.75rem;
+
+    --primary-color: 146, 42%, 57%;
+    --pc-light: 172, 67%, 69%;
+    --pc-dark: 176, 45%, 42%;
+    --secondary-color: 192, 59%, 37%;
+    --sc-dark: 206, 71%, 35%;
+    --pc-sc-mix: 193, 60%, 37%;
+
+    --button: 164, 75%, 73%;
+    --button-hover: 165, 74%, 62%;
+    --mainbackground: 0, 0%, 96%;
   }
 
   .dark {

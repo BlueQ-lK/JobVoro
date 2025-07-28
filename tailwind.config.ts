@@ -13,17 +13,28 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
+			mainbackground: 'hsl(var(--mainbackground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
   			},
+			button: {
+				primary: 'hsl(var(--button))',
+				secondary: 'hsl(var(--button-hover))',
+			},
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',
   				foreground: 'hsl(var(--popover-foreground))'
   			},
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
-  				foreground: 'hsl(var(--primary-foreground))'
+  				foreground: 'hsl(var(--primary-foreground))',
+				maincolor: 'hsl(var(--primary-color))',
+				maincolorlight: 'hsl(var(--pc-light))',
+				maincolordark: 'hsl(var(--pc-dark))',
+				secondcolor: 'hsl(var(--secondary-color))',
+				secondcolordark: 'hsl(var(--sc-dark))',
+				primarymix: 'hsl(var(--pc-sc-mix))',
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',

@@ -12,15 +12,6 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
-import { Separator } from "../ui/separator";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "../ui/breadcrumb";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -71,7 +62,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen">
       <div>
         <main className="px-6 pb-6">
           <SidebarProvider>

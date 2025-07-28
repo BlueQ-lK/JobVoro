@@ -1,12 +1,17 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Plus, Bell, FileText, BarChart3 } from "lucide-react"
-
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Plus, Bell, FileText, BarChart3 } from "lucide-react";
 
 export function QuickActions() {
   return (
-    <Card>
+    <Card className="shadow-md">
       <CardHeader>
         <CardTitle>Quick Actions</CardTitle>
         <CardDescription>Common tasks to keep you organized</CardDescription>
@@ -18,19 +23,31 @@ export function QuickActions() {
             Add New Job
           </Link>
         </Button>
-        <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
+        <Button
+          variant="outline"
+          className="w-full justify-start bg-transparent"
+          asChild
+        >
           <Link href="/timeline">
             <BarChart3 className="mr-2 h-4 w-4" />
             View Timeline
           </Link>
         </Button>
-        <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
+        <Button
+          variant="outline"
+          className="w-full justify-start bg-transparent"
+          asChild
+        >
           <Link href="/reminders">
             <Bell className="mr-2 h-4 w-4" />
             Check Reminders
           </Link>
         </Button>
-        <Button variant="outline" className="w-full justify-start bg-transparent" asChild>
+        <Button
+          variant="outline"
+          className="w-full justify-start bg-transparent"
+          asChild
+        >
           <Link href="/notes">
             <FileText className="mr-2 h-4 w-4" />
             Review Notes
@@ -38,5 +55,5 @@ export function QuickActions() {
         </Button>
       </CardContent>
     </Card>
-  )
+  );
 }

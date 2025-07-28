@@ -1,16 +1,22 @@
-"use client"
+"use client";
 
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { useJobs } from "@/hooks/use-jobs"
-import { useReminders } from "@/hooks/use-reminders"
-import { useNotes } from "@/hooks/use-notes"
-import { formatDistanceToNow } from "date-fns"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useJobs } from "@/hooks/use-jobs";
+import { useReminders } from "@/hooks/use-reminders";
+import { useNotes } from "@/hooks/use-notes";
+import { formatDistanceToNow } from "date-fns";
 
 export function RecentActivity() {
-  const { jobs } = useJobs()
-  const { reminders } = useReminders()
-  const { notes } = useNotes()
+  const { jobs } = useJobs();
+  const { reminders } = useReminders();
+  const { notes } = useNotes();
 
   // Combine and sort all activities by date
   const activities = [
@@ -37,10 +43,10 @@ export function RecentActivity() {
     })),
   ]
     .sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime())
-    .slice(0, 5)
+    .slice(0, 5);
 
   return (
-    <Card>
+    <Card className="shadow-md">
       <CardHeader>
         <CardTitle>Recent Activity</CardTitle>
         <CardDescription>Your latest job application updates</CardDescription>
@@ -53,11 +59,16 @@ export function RecentActivity() {
             </p>
           ) : (
             activities.map((activity) => (
-              <div key={`${activity.type}-${activity.id}`} className="flex items-center justify-between">
+              <div
+                key={`${activity.type}-${activity.id}`}
+                className="flex items-center justify-between"
+              >
                 <div className="flex-1">
                   <p className="text-sm font-medium">{activity.action}</p>
                   <p className="text-xs text-muted-foreground">
-                    {formatDistanceToNow(new Date(activity.time), { addSuffix: true })}
+                    {formatDistanceToNow(new Date(activity.time), {
+                      addSuffix: true,
+                    })}
                   </p>
                 </div>
                 <Badge variant="secondary">{activity.status}</Badge>
@@ -67,5 +78,5 @@ export function RecentActivity() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

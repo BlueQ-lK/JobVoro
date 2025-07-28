@@ -14,13 +14,14 @@ import {
 
 import { NavMain } from "@/components/sidebar/nav-main";
 import { NavUser } from "@/components/sidebar/nav-user";
-import { TeamSwitcher } from "@/components/sidebar/team-switecher";
+
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { useAuth } from "../auth-provider";
 import { useProfile } from "@/hooks/use-profile";
@@ -28,6 +29,7 @@ import { useProfile } from "@/hooks/use-profile";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const { profile } = useProfile();
   const { user } = useAuth();
+  const { state } = useSidebar();
   const data = {
     user: {
       name: profile?.full_name || "User",
@@ -82,9 +84,22 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   };
 
   return (
-    <Sidebar collapsible="icon" {...props}>
+    <Sidebar collapsible="icon" {...props} className="bg-background">
       <SidebarHeader>
-        <TeamSwitcher teams={data.teams} />
+        {state === "expanded" ? (
+          <div className="flex items-center">
+            <div className="w-14 shrink-0">
+              <img src="jobvoro.png" alt="logo" />
+            </div>
+            <div className="text-[#3a9f96] font-bold text-2xl">
+              Job<span className="text-[#173c4f]">V</span>oro
+            </div>
+          </div>
+        ) : (
+          <div className="w-9 shrink-0 transition-all">
+            <img src="jobvoro.png" alt="logo" />
+          </div>
+        )}
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />

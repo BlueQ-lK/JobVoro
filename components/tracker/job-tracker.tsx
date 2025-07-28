@@ -142,7 +142,6 @@ export function JobTracker() {
               <Filter className="mr-2 h-4 w-4" />
               Filter
             </Button>
-            <Button onClick={refetch}>Refresh</Button>
           </div>
         )}
         <Button onClick={() => setIsAddModalOpen(true)}>
