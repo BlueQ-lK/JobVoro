@@ -74,11 +74,11 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         url: "/notes",
         icon: StickyNote,
       },
-      {
-        title: "Settings",
-        url: "/settings",
-        icon: Settings,
-      },
+      // {
+      //   title: "Settings",
+      //   url: "/settings",
+      //   icon: Settings,
+      // },
     ],
   };
 
