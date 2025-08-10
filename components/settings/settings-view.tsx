@@ -1,27 +1,35 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Switch } from "@/components/ui/switch"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
-import { useAuth } from "@/components/auth-provider"
-import { User, Bell, Shield, Download, Trash2, Sun, Moon } from "lucide-react"
-import { useTheme } from "next-themes"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { useAuth } from "@/components/auth-provider";
+import { User, Bell, Shield, Download, Trash2, Sun, Moon } from "lucide-react";
+import { useTheme } from "next-themes";
 
 export function SettingsView() {
-  const { user } = useAuth()
-  const [emailNotifications, setEmailNotifications] = useState(true)
-  const [reminderFrequency, setReminderFrequency] = useState("daily")
-  const {theme, setTheme} = useTheme()
+  const { user } = useAuth();
+  const [emailNotifications, setEmailNotifications] = useState(true);
+  const [reminderFrequency, setReminderFrequency] = useState("daily");
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold">Settings</h1>
-        <p className="text-muted-foreground">Manage your account and preferences</p>
+        <p className="text-muted-foreground">
+          Manage your account and preferences
+        </p>
       </div>
 
       <div className="grid gap-6">
@@ -56,15 +64,22 @@ export function SettingsView() {
               <Bell className="mr-2 h-5 w-5" />
               Notification Settings
             </CardTitle>
-            <CardDescription>Configure how you receive reminders and updates</CardDescription>
+            <CardDescription>
+              Configure how you receive reminders and updates
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Email Notifications</Label>
-                <p className="text-sm text-muted-foreground">Receive reminder emails</p>
+                <p className="text-sm text-muted-foreground">
+                  Receive reminder emails
+                </p>
               </div>
-              <Switch checked={emailNotifications} onCheckedChange={setEmailNotifications} />
+              <Switch
+                checked={emailNotifications}
+                onCheckedChange={setEmailNotifications}
+              />
             </div>
             <div className="space-y-2">
               <Label htmlFor="frequency">Reminder Frequency</Label>
@@ -90,19 +105,28 @@ export function SettingsView() {
               <Shield className="mr-2 h-5 w-5" />
               Privacy & Security
             </CardTitle>
-            <CardDescription>Manage your privacy settings and security options</CardDescription>
+            <CardDescription>
+              Manage your privacy settings and security options
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label>Stealth Mode</Label>
-                <p className="text-sm text-muted-foreground">Hide sensitive information when needed</p>
+                <p className="text-sm text-muted-foreground">
+                  Hide sensitive information when needed
+                </p>
               </div>
               <Switch />
             </div>
             <div className="space-y-2">
               <Label htmlFor="pin">Set PIN for Quick Lock</Label>
-              <Input id="pin" type="password" placeholder="Enter 4-digit PIN" maxLength={4} />
+              <Input
+                id="pin"
+                type="password"
+                placeholder="Enter 4-digit PIN"
+                maxLength={4}
+              />
             </div>
             <Button>Update Security Settings</Button>
           </CardContent>
@@ -121,7 +145,11 @@ export function SettingsView() {
               variant="ghost"
               size="icon"
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              aria-label={
+                theme === "dark"
+                  ? "Switch to light mode"
+                  : "Switch to dark mode"
+              }
             >
               {theme === "dark" ? (
                 <Sun className="w-5 h-5" aria-hidden="true" />
@@ -145,7 +173,9 @@ export function SettingsView() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Export Data</p>
-                <p className="text-sm text-muted-foreground">Download all your job application data</p>
+                <p className="text-sm text-muted-foreground">
+                  Download all your job application data
+                </p>
               </div>
               <Button variant="outline">
                 <Download className="mr-2 h-4 w-4" />
@@ -156,7 +186,9 @@ export function SettingsView() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Export JSON</p>
-                <p className="text-sm text-muted-foreground">Download data in JSON format</p>
+                <p className="text-sm text-muted-foreground">
+                  Download data in JSON format
+                </p>
               </div>
               <Button variant="outline">
                 <Download className="mr-2 h-4 w-4" />
@@ -173,13 +205,17 @@ export function SettingsView() {
               <Trash2 className="mr-2 h-5 w-5" />
               Danger Zone
             </CardTitle>
-            <CardDescription>Irreversible actions that affect your account</CardDescription>
+            <CardDescription>
+              Irreversible actions that affect your account
+            </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-medium">Delete Account</p>
-                <p className="text-sm text-muted-foreground">Permanently delete your account and all associated data</p>
+                <p className="text-sm text-muted-foreground">
+                  Permanently delete your account and all associated data
+                </p>
               </div>
               <Button variant="destructive">Delete Account</Button>
             </div>
@@ -187,5 +223,5 @@ export function SettingsView() {
         </Card>
       </div>
     </div>
-  )
+  );
 }

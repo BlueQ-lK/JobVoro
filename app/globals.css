@@ -35,6 +35,12 @@
     --button: 164, 75%, 73%;
     --button-hover: 165, 74%, 62%;
     --mainbackground: 0, 0%, 96%;
+
+    --applied: 150, 74%, 94%;
+    --interview: 148, 57%, 82%;
+    --offer: 74, 94%, 90%;
+    --rejected: 344, 70%, 76%;
+    --waiting: 252, 38%, 85%;
   }
 
   .dark {

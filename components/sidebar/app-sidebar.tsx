@@ -1,5 +1,4 @@
-"use client";
-import * as React from "react";
+import { ComponentProps } from "react";
 import {
   Calendar,
   StickyNote,
@@ -26,7 +25,7 @@ import {
 import { useAuth } from "../auth-provider";
 import { useProfile } from "@/hooks/use-profile";
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const { profile } = useProfile();
   const { user } = useAuth();
   const { state } = useSidebar();

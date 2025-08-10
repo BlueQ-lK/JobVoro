@@ -71,7 +71,14 @@ const config: Config = {
   				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
-  			}
+  			},
+			jobstatus: {
+				applied: 'hsl(var(--applied))',
+				interview: 'hsl(var(--interview))',
+				offer: 'hsl(var(--offer))',
+				rejected: 'hsl(var(--rejected))',
+				waiting: 'hsl(var(--waiting))'
+			}
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

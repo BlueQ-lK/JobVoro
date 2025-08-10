@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card";
 
 export function DemoSection() {
   return (
@@ -9,7 +9,9 @@ export function DemoSection() {
             <span className="mr-2">📱</span>
             Screenshots & Demo
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">See QuietApply in Action</h2>
+          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+            See JobVoro in Action
+          </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             A clean, intuitive interface that makes job tracking effortless.
           </p>
@@ -29,7 +31,8 @@ export function DemoSection() {
               <div className="p-6">
                 <h4 className="font-semibold mb-2">Quick Stats & Overview</h4>
                 <p className="text-sm text-muted-foreground">
-                  See your job hunt progress at a glance with summary cards and recent activity.
+                  See your job hunt progress at a glance with summary cards and
+                  recent activity.
                 </p>
               </div>
             </CardContent>
@@ -48,7 +51,8 @@ export function DemoSection() {
               <div className="p-6">
                 <h4 className="font-semibold mb-2">Organized Job Tracking</h4>
                 <p className="text-sm text-muted-foreground">
-                  Each job application gets its own card with status, notes, and timeline.
+                  Each job application gets its own card with status, notes, and
+                  timeline.
                 </p>
               </div>
             </CardContent>
@@ -67,7 +71,8 @@ export function DemoSection() {
               <div className="p-6">
                 <h4 className="font-semibold mb-2">Visual Progress</h4>
                 <p className="text-sm text-muted-foreground">
-                  Track your application journey from applied to offer with visual timelines.
+                  Track your application journey from applied to offer with
+                  visual timelines.
                 </p>
               </div>
             </CardContent>
@@ -75,5 +80,5 @@ export function DemoSection() {
         </div>
       </div>
     </section>
-  )
+  );
 }

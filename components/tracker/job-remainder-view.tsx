@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Clock, Calendar, Award, Briefcase } from "lucide-react";
@@ -56,7 +54,7 @@ export function JobRemainderView({ job_id, status }: JobTimelineProps) {
               <div className="flex items-start ">
                 <Briefcase className="mr-1 h-3 w-3 mt-0.5" />
                 <p className="text-xs text-muted-foreground flex items-center">
-                  {reminder.jobs.company} - {reminder.jobs.position}
+                  {reminder.jobs.company}
                 </p>
               </div>
             )}
@@ -107,7 +105,7 @@ export function JobRemainderView({ job_id, status }: JobTimelineProps) {
               <div className="flex items-start">
                 <Briefcase className="mr-1 h-3 w-3 mt-0.5" />
                 <p className="text-xs text-muted-foreground flex items-center">
-                  {reminder.jobs.company} - {reminder.jobs.position}
+                  {reminder.jobs.company}
                 </p>
               </div>
             )}

@@ -30,6 +30,7 @@ import { AddJobModal } from "./add-job-modal";
 import { AddReminderModal } from "../reminders/add-reminder-modal";
 import { Briefcase } from "lucide-react";
 import { JobViewAll } from "./job-view";
+import { cn } from "@/lib/utils";
 
 const statusOptions = [
   "Applied",
@@ -277,7 +278,7 @@ export function JobTracker() {
                         handleDeleteJob(job.id);
                       }}
                     >
-                      <Trash2 className="h-4 w-4" />
+                      <Trash2 className="h-4 w-4 text-red-400" />
                     </Button>
                   </div>
                 </CardContent>
