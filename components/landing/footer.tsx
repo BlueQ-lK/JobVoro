@@ -8,7 +8,12 @@ export function Footer() {
         <div className="grid md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
-              <Image src={"jobvoro.png"} alt="jobvoro" width={40} height={40} />
+              <Image
+                src={"jobvoro.webp"}
+                alt="jobvoro"
+                width={40}
+                height={40}
+              />
               <span className="text-xl font-bold">JobVoro</span>
             </div>
             <p className="text-muted-foreground mb-4 max-w-md">

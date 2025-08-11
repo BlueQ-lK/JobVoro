@@ -1,8 +1,6 @@
 import {
   Sheet,
-  SheetClose,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
@@ -14,12 +12,7 @@ import {
   ExternalLink,
   Edit3,
   Trash2,
-  RefreshCw,
-  ChevronRight,
   Building2,
-  CheckCircle,
-  Circle,
-  X,
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { Card } from "../ui/card";
@@ -38,7 +31,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { Input } from "../ui/input";
 import { useNotes } from "@/hooks/use-notes";
 
 interface JobViewProps {

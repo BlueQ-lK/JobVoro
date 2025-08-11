@@ -1,6 +1,7 @@
+"use client";
+
 import { ComponentProps } from "react";
 import {
-  Calendar,
   StickyNote,
   Bell,
   Briefcase,
@@ -8,7 +9,6 @@ import {
   GalleryVerticalEnd,
   AudioWaveform,
   Command,
-  Settings,
 } from "lucide-react";
 
 import { NavMain } from "@/components/sidebar/nav-main";
@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/sidebar";
 import { useAuth } from "../auth-provider";
 import { useProfile } from "@/hooks/use-profile";
+import Image from "next/image";
 
 export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
   const { profile } = useProfile();
@@ -33,7 +34,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
     user: {
       name: profile?.full_name || "User",
       email: user?.email || "user@gmail.com",
-      avatar: "/avater/avater.png",
+      avatar: "/avater/avater.webp",
     },
     teams: [
       {
@@ -88,15 +89,27 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         {state === "expanded" ? (
           <div className="flex items-center">
             <div className="w-14 shrink-0">
-              <img src="jobvoro.png" alt="logo" />
+              <Image
+                src="jobvoro.avif"
+                alt="logo"
+                width={56}
+                height={56}
+                priority
+              />
             </div>
-            <div className="text-[#3a9f96] font-bold text-2xl">
-              Job<span className="text-[#173c4f]">V</span>oro
+            <div className="text-primary-maincolordark font-bold text-2xl">
+              Job<span className="text-primary-secondcolordark">V</span>oro
             </div>
           </div>
         ) : (
           <div className="w-9 shrink-0 transition-all">
-            <img src="jobvoro.png" alt="logo" />
+            <Image
+              src="jobvoro.avif"
+              alt="logo"
+              width={36}
+              height={36}
+              priority
+            />
           </div>
         )}
       </SidebarHeader>

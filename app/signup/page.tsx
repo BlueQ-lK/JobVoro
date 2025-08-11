@@ -57,7 +57,7 @@ export default function SignUpPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="text-center">
           <div className="flex items-center justify-center space-x-2 mb-4">
-            <Image src={"jobvoro.png"} alt="jobvoro" width={40} height={40} />
+            <Image src={"jobvoro.webp"} alt="jobvoro" width={40} height={40} />
             <span className="text-xl font-bold">JobVoro</span>
           </div>
           <CardTitle className="text-2xl">Create your account</CardTitle>

@@ -1,7 +1,7 @@
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useJobs } from "@/hooks/use-jobs";
 import { useState, useRef, useEffect } from "react";
-import { NotepadText, X, Hash, Type, FileText, Briefcase } from "lucide-react";
+import { NotepadText, Type, FileText } from "lucide-react";
 import { Label } from "../ui/label";
 import {
   Select,

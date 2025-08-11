@@ -1,7 +1,5 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { CheckCircle, Clock, Calendar, Award, Briefcase } from "lucide-react";
-import { useJobs } from "@/hooks/use-jobs";
+import { CheckCircle, Calendar, Briefcase } from "lucide-react";
 import { format, formatDistanceToNow } from "date-fns";
 import { useReminders } from "@/hooks/use-reminders";
 import { Button } from "../ui/button";

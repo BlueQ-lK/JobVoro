@@ -15,7 +15,7 @@ export function LandingHeader() {
     <header className="sticky top-0 px-16 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
-          <Image src={"jobvoro.png"} alt="jobvoro" width={40} height={40} />
+          <Image src={"jobvoro.webp"} alt="jobvoro" width={40} height={40} />
           <span className="text-xl font-bold">JobVoro</span>
         </Link>
 
