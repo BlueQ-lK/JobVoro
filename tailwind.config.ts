@@ -13,15 +13,15 @@ const config: Config = {
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
-			mainbackground: 'hsl(var(--mainbackground))',
+  			mainbackground: 'hsl(var(--mainbackground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
   				foreground: 'hsl(var(--card-foreground))'
   			},
-			button: {
-				primary: 'hsl(var(--button))',
-				secondary: 'hsl(var(--button-hover))',
-			},
+  			button: {
+  				primary: 'hsl(var(--button))',
+  				secondary: 'hsl(var(--button-hover))'
+  			},
   			popover: {
   				DEFAULT: 'hsl(var(--popover))',
   				foreground: 'hsl(var(--popover-foreground))'
@@ -29,12 +29,12 @@ const config: Config = {
   			primary: {
   				DEFAULT: 'hsl(var(--primary))',
   				foreground: 'hsl(var(--primary-foreground))',
-				maincolor: 'hsl(var(--primary-color))',
-				maincolorlight: 'hsl(var(--pc-light))',
-				maincolordark: 'hsl(var(--pc-dark))',
-				secondcolor: 'hsl(var(--secondary-color))',
-				secondcolordark: 'hsl(var(--sc-dark))',
-				primarymix: 'hsl(var(--pc-sc-mix))',
+  				maincolor: 'hsl(var(--primary-color))',
+  				maincolorlight: 'hsl(var(--pc-light))',
+  				maincolordark: 'hsl(var(--pc-dark))',
+  				secondcolor: 'hsl(var(--secondary-color))',
+  				secondcolordark: 'hsl(var(--sc-dark))',
+  				primarymix: 'hsl(var(--pc-sc-mix))'
   			},
   			secondary: {
   				DEFAULT: 'hsl(var(--secondary))',
@@ -72,13 +72,13 @@ const config: Config = {
   				border: 'hsl(var(--sidebar-border))',
   				ring: 'hsl(var(--sidebar-ring))'
   			},
-			jobstatus: {
-				applied: 'hsl(var(--applied))',
-				interview: 'hsl(var(--interview))',
-				offer: 'hsl(var(--offer))',
-				rejected: 'hsl(var(--rejected))',
-				waiting: 'hsl(var(--waiting))'
-			}
+  			jobstatus: {
+  				applied: 'hsl(var(--applied))',
+  				interview: 'hsl(var(--interview))',
+  				offer: 'hsl(var(--offer))',
+  				rejected: 'hsl(var(--rejected))',
+  				waiting: 'hsl(var(--waiting))'
+  			}
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

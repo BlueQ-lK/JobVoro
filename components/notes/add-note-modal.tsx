@@ -217,7 +217,6 @@ export function AddNoteModal({
                 <Button
                   type="submit"
                   disabled={isLoading || !formData.title.trim()}
-                  className="px-6 bg-blue-600 hover:bg-blue-700"
                 >
                   {isLoading ? (
                     <div className="flex items-center space-x-2">
