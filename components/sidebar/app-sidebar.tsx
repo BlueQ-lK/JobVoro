@@ -90,7 +90,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
           <div className="flex items-center">
             <div className="w-14 shrink-0">
               <Image
-                src="jobvoro.avif"
+                src="/jobvoro.avif"
                 alt="logo"
                 width={56}
                 height={56}
@@ -104,7 +104,7 @@ export function AppSidebar({ ...props }: ComponentProps<typeof Sidebar>) {
         ) : (
           <div className="w-9 shrink-0 transition-all">
             <Image
-              src="jobvoro.avif"
+              src="/jobvoro.avif"
               alt="logo"
               width={36}
               height={36}

@@ -11,6 +11,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import { Button } from "../ui/button";
+import { toast } from "@/hooks/use-toast";
 
 interface AddNoteModalProps {
   open: boolean;
@@ -93,7 +94,11 @@ export function AddNoteModal({
 
       onOpenChange(false);
     } catch (error) {
-      console.log("note submit error {add-note-modal.jsx L:88}");
+      toast({
+        variant: "destructive",
+        title: "Failed to save note.",
+        description: "Please try again.",
+      });
     } finally {
       setIsLoading(false);
     }

@@ -32,6 +32,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { DropdownMenuContent } from "@radix-ui/react-dropdown-menu";
+import { toast } from "@/hooks/use-toast";
 
 export function NotesView() {
   const { notes, isLoading, addNote, updateNote, refetch, deleteNote } =
@@ -69,7 +70,12 @@ export function NotesView() {
     try {
       await deleteNote(noteId);
     } catch (error) {
-      console.log("Note delete error");
+      toast({
+        variant: "destructive",
+        title: "Couldn’t Delete Note",
+        description:
+          "Something went wrong while deleting your note. Please try again.",
+      });
     }
   };
 
@@ -84,7 +90,11 @@ export function NotesView() {
       setIsAddModalOpen(false);
       setNote({ title: "", content: "", job_id: "", id: "" });
     } catch (error) {
-      console.log("error saving note {notes-view.tsx L:66}");
+      toast({
+        variant: "destructive",
+        title: "Failed to save note.",
+        description: "Please try again.",
+      });
     }
   };
 
@@ -116,7 +126,11 @@ export function NotesView() {
     try {
       await updateNote(noteId, { pin: !pinStatus });
     } catch (error) {
-      console.log("pinned update error");
+      toast({
+        variant: "destructive",
+        title: "Failed to Pin note.",
+        description: "Please try again.",
+      });
     }
   };
 

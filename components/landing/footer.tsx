@@ -9,7 +9,7 @@ export function Footer() {
           <div className="md:col-span-2">
             <div className="flex items-center space-x-2 mb-4">
               <Image
-                src={"jobvoro.webp"}
+                src={"/jobvoro.avif"}
                 alt="jobvoro"
                 width={40}
                 height={40}
